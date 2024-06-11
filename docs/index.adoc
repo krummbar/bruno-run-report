@@ -1,0 +1,31 @@
+= Bruno Run Report
+include::edit-advise.adoc[]
+:source-highlighter: highlight.js
+:toc: macro
+:icons: font
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:action-badge-ci: https://github.com/krummbar/bruno-run-report/actions/workflows/ci.yml/badge.svg
+:action-badge-lint: https://github.com/krummbar/bruno-run-report/actions/workflows/linter.yml/badge.svg
+:url-bruno-run-action: https://github.com/krummbar/bruno-run-action
+
+image:{action-badge-ci}[Continuous Integration,link={url-action-ci}]
+image:{action-badge-lint}[Lint Codebase,link={url-action-lint}]
+
+A GitHub Action attaching a Markdown summary to a `bru run` execution parsed from a JSON result.
+This can be a subsequent step to {url-bruno-run-action}[bruno-run-action] to render a test run summary.
+
+toc::[]
+
+include::usage.adoc[leveloffset=1]
+
+== Development
+
+include::test-local.adoc[leveloffset=2]
+
+include::documentation.adoc[leveloffset=2]

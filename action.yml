@@ -1,0 +1,24 @@
+name: bruno-run-report
+description: Attaches a bru run execution Markdown summary
+author: Max Bauer
+branding:
+  color: orange
+  icon: list
+
+inputs:
+  # tag::inputs[]
+  runResult:
+    description: Path of the bru run execution summary.
+    required: true
+    default: ''
+  # end::inputs[]
+
+outputs:
+  # tag::outputs[]
+  success:
+    description: Indicates test run success status.
+  # end::outputs[]
+
+runs:
+  using: docker
+  image: Dockerfile

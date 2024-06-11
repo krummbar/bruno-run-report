@@ -1,0 +1,14 @@
+name: Bruno Test Collection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bruno-tests:
+    name: Bruno test collection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attach bru run summary
+        uses: krummbar/bruno-run-report@main
+        with:
+          run-result: bru-output.json

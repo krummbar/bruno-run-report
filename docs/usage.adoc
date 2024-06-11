@@ -1,0 +1,27 @@
+= Usage
+
+.TODO
+[NOTE]
+====
+Document usage
+====
+
+.Attach run summary
+[source,yaml]
+----
+include::examples/usage.yaml[]
+----
+
+== Inputs
+
+[source,yaml]
+----
+include::../action.yml[tag=inputs,indent=0]
+----
+
+== Outputs
+
+[source,yaml]
+----
+include::../action.yml[tag=outputs,indent=0]
+----
