@@ -7,16 +7,32 @@ branding:
 
 inputs:
   # tag::inputs[]
-  runResult:
+  run-report-path:
     description: Path of the bru run execution summary.
     required: true
-    default: ''
+  output-path:
+    description: If provided the contents of the markdown report will be written to the given path.
+    required: false
+  include-footer:
+    description: En- or disable the report footer.
+    required: false
+    default: 'true'
+  include-report-sources:
+    description: If enabled, each suite includes the raw JSON details of the run result.
+    required: false
+    default: 'false'
+  only-failed:
+    description: Skips successful testsuites in the report if set true.
+    required: false
+    default: 'false'
   # end::inputs[]
 
 outputs:
   # tag::outputs[]
   success:
     description: Indicates test run success status.
+  md-report-path:
+    description: The contents of the markdown file.
   # end::outputs[]
 
 runs:

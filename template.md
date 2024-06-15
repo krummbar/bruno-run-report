@@ -1,26 +1,11 @@
-# Bruno Run Summary
+# Bruno Run Summary - :boom: `Failure`
+# Bruno Run Summary - :100: `Success`
 
-> **:fire:**
->
-> .res.status eq 200
+**Result**<br/>
+:boom: Failure
 
-> #### :green_square: should return secret message
-> ----
-> `.res.status eq 200`
->
-
-> #### :red_square: should return secret message
-> ```
-> expected { null: 'null' } to deeply equal { hello: 'secret world!' }
-> ```
-
-> #### :x: should return secret message
-> ---
-> expected { null: 'null' } to deeply equal { hello: 'secret world!' }
-
-`⌛ Duration: 2.254 s`
-`🗒️ Requests: 5`
-`❌ Failures: 1`
+**Result**<br/>
+:100: Success
 
 | Item       | Total | Passed | Failed |
 | ---------- | ----- | ------ | ------ |
@@ -116,16 +101,11 @@
 <h3>✅ echo - 6/6 passed - 988 ms</h3>
 </summary>
 
-**Assertions**
-|       Status       | Expression | Operator | Operand | Actual | Error |
-| :----------------: | ---------- | -------- | ------- | ------ | ----- |
-| :white_check_mark: | res.status | eq       | 200     | 200    | --    |
-
-**Tests**
-| Status | Expression                   | Expected | Actual | Error                                                                |
-| :----: | ---------------------------- | -------- | ------ | -------------------------------------------------------------------- |
-|  :x:   | should return secret message |          |        | expected { null: 'null' } to deeply equal { hello: 'secret world!' } |
-
+**Asserts**
+|       Status       | Type   | Expression                   | Error                                                                |
+| :----------------: | ------ | ---------------------------- | -------------------------------------------------------------------- |
+| :white_check_mark: | assert | res.status eq 200            | --                                                                   |
+|        :x:         | test   | should return secret message | expected { null: 'null' } to deeply equal { hello: 'secret world!' } |
 
 </details>
 
@@ -135,9 +115,12 @@
 </summary>
 
 **Assertions**
-|       Status       | Expression | Operator | Operand | Actual | Error |
-| :----------------: | ---------- | -------- | ------- | ------ | ----- |
-| :white_check_mark: | res.status | eq       | 200     | 200    | --    |
+<summary>
+<h3><strong>❌</strong> echo/secret - 1/2 passed - 988 ms</h3>
+</summary>
+|       Status       | Expression        | Operator | Operand | Actual | Error |
+| :----------------: | ----------------- | -------- | ------- | ------ | ----- |
+| :white_check_mark: | res.status eq 200 | eq       | 200     | 200    | --    |
 
 **Tests**
 | Status | Expression                   | Expected | Actual | Error                                                                |

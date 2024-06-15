@@ -11,4 +11,4 @@ jobs:
       - name: Attach bru run summary
         uses: krummbar/bruno-run-report@main
         with:
-          run-result: bru-output.json
+          run-report-path: bru-output.json
