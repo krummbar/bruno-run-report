@@ -38,3 +38,9 @@ outputs:
 runs:
   using: docker
   image: Dockerfile
+  env:
+    IN_RUN_REPORT_PATH: ${{ inputs.run-report-path }}
+    IN_OUTPUT_PATH: ${{ inputs.output-path }}
+    IN_INCLUDE_FOOTER: ${{ inputs.include-footer }}
+    IN_INCLUDE_REPORT_SOURCES: ${{ inputs.include-report-sources }}
+    IN_ONLY_FAILED: ${{ inputs.only-failed }}

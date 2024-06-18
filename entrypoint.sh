@@ -1,69 +1,93 @@
-#!/bin/bash
-dry_run="${BRUNO_ACTION_DRY_RUN}"
+#!/bin/sh
+# consts
+PARTIAL_FOOTER=src/partial-footer.md
+PARTIAL_REQUESTS=src/partial-requests.md
+JQ_PARTIAL_HEADER=src/bru-md-head.jq
+JQ_PARTIAL_BODY=src/bru-md-body.jq
+OUTFILE="$(mktemp)"
+FEAT_OUT_REPORT_PATH=false
+if [ -n "${IN_OUTPUT_PATH}" ]; then
+  OUTFILE="${IN_OUTPUT_PATH}"
+  FEAT_OUT_REPORT_PATH=true
+fi
 
-function print_input {
-  echo "::debug::INPUT_INCLUDE_REPORT_SOURCES='${INPUT_INCLUDE_REPORT_SOURCES}'"
-  echo "::debug::INPUT_INCLUDE_FOOTER='${INPUT_INCLUDE_FOOTER}'"
-  echo "::debug::INPUT_ONLY_FAILED='${INPUT_ONLY_FAILED}'"
-  echo "::debug::INPUT_OUTPUT_PATH='${INPUT_OUTPUT_PATH}'"
-  echo "::debug::INPUT_RUN_REPORT_PATH='${INPUT_RUN_REPORT_PATH}'"
+# Dumps the input parameters in debug mode.
+print_input() {
+  echo "::debug::IN_INCLUDE_REPORT_SOURCES=${IN_INCLUDE_REPORT_SOURCES}"
+  echo "::debug::IN_INCLUDE_FOOTER=${IN_INCLUDE_FOOTER}"
+  echo "::debug::IN_ONLY_FAILED=${IN_ONLY_FAILED}"
+  echo "::debug::IN_OUTPUT_PATH=${IN_OUTPUT_PATH}"
+  echo "::debug::IN_RUN_REPORT_PATH=${IN_RUN_REPORT_PATH}"
+  echo "::debug::FEAT_OUT_REPORT_PATH=${FEAT_OUT_REPORT_PATH}"
+  echo "::debug::OUTFILE=${OUTFILE}"
 }
-# TODO script should use a temporary workfile,
-# and if INPUT_OUTPUT_PATH is provided, copy the contents to the file.
 
 # Exit script with status code and message
 #
 # $1 - Exit code
 # $2 - Message to be dumped before exiting
-function exit_with {
+exit_with() {
   prefix="::notice"
-  if [[ "${1}" != "0" ]]; then
+  if [ "${1}" != "0" ]; then
     prefix="::error"
   fi
   echo "${prefix}::$2"
   exit "$1"
 }
 
-function use_jq {
-  jq -r -f "$1" -L src --arg only_failed "${INPUT_ONLY_FAILED}" --arg include_source "${INPUT_INCLUDE_REPORT_SOURCES}" "${INPUT_RUN_REPORT_PATH}"
+# Evaluates the contents of a jq filter file and appends the final result to ${IN_RUN_REPORT_PATH}.
+#
+# $1 - Path of the jq filter file
+insert_jq() {
+  jq -r -f "$1" -L src --arg only_failed "${IN_ONLY_FAILED}" --arg include_source "${IN_INCLUDE_REPORT_SOURCES}" "${IN_RUN_REPORT_PATH}"
 }
 
-function add_line {
-  echo "$1" >> "${INPUT_OUTPUT_PATH}"
+# Copies the contents of given file and pastes the contents to ${OUTFILE}.
+#
+# $1 - Path of the file to copy from
+insert_file() {
+  cat "$1" >>"${OUTFILE}"
 }
 
-function add_footer {
-  if [[ "${INPUT_INCLUDE_FOOTER}" == "true" ]]; then
-    add_line "---"
-    add_line "<!-- marker:footer -->"
-    add_line ":blue_book: [bruno docs](https://docs.usebruno.com/)"
-    add_line "･ :octocat: [bruno-run-report action](https://github.com/krummbar/bruno-run-report)"
+# Evaluates if the input parameter ${IN_INCLUDE_FOOTER} and appends the footer template if set to 'true'.
+insert_section_footer() {
+  if [ "${IN_INCLUDE_FOOTER}" = "true" ]; then
+    insert_file "${PARTIAL_FOOTER}"
   fi
 }
 
-function add_requests {
-  add_line "## Requests"
-  add_line ""
-  use_jq src/bru-md-body.jq >> ${INPUT_OUTPUT_PATH}
+# Adds the request section to the report file.
+insert_section_requests() {
+  insert_file "${PARTIAL_REQUESTS}"
+  insert_jq "${JQ_PARTIAL_BODY}" >>"${OUTFILE}"
 }
 
-function add_header {
-  use_jq src/bru-md-head.jq >> ${INPUT_OUTPUT_PATH}
+# Adss the header section to the report file.
+insert_section_header() {
+  insert_jq "${JQ_PARTIAL_HEADER}" >>"${OUTFILE}"
 }
 
-function render_document {
-  : ${INPUT_OUTPUT_PATH}
-  add_header
-  add_requests
-  add_footer
+# Creates/clears the target report file and adds all required content to it.
+render_document() {
+  : >"${OUTFILE}"
+  insert_section_header
+  insert_section_requests
+  insert_section_footer
 }
-
 
 # Main function
-function main {
+main() {
   print_input
   render_document
-  exit_with 0 "success!"
+
+  # TODO check how determine success here
+  echo "success=true" >>"${GITHUB_OUTPUT}"
+  # If custom path for the report is provided include it as output
+  if [ "${FEAT_OUT_REPORT_PATH}" = "true" ]; then
+    echo "md-report-path=${OUTFILE}" >>"${GITHUB_OUTPUT}"
+  fi
+  # Exit action
+  exit_with 0 "Successfully rendered bruno run Markdown report."
 }
 
 main

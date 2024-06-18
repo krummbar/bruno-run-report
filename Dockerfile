@@ -8,6 +8,7 @@ RUN apk add --no-cache jq
 WORKDIR /usr/src
 
 # Copy any source file(s) required for the action
+COPY src ./src
 COPY entrypoint.sh .
 
 # Configure the container to be run as an executable

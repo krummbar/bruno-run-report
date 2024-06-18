@@ -53,6 +53,14 @@ def get_testsuite_status_indicator:
   end
 ;
 
+def get_testsuite_status_text:
+  if (. | count_step_states("fail")) == 0 then
+    "Pass"
+  else
+    "Fail"
+  end
+;
+
 def get_status_icon(status):
   if status == "pass" then
     ":white_check_mark:"
@@ -70,8 +78,8 @@ def md_assert_table_test_row:
 ;
 
 def md_assert_table:
+  "\n" +
   if (. | count_verify_steps > 0) then
-    "\n" +
     "| Status | Type | Expression | Error |\n" +
     "| :----: | ---- | ---------- | ----- |\n" +
     ([ .assertionResults[] | md_assert_table_assert_row ] | join("\n")) + "\n" +
@@ -81,30 +89,27 @@ def md_assert_table:
   end
 ;
 
-def md_raw_source_block(suite):
-  "**Raw Suite Content**\n" +
-  "\n" +
-  "```json\n" +
-  "\(suite)\n" +
-  "```\n"
-;
-
 def md_raw_source_block(include_source):
+  "\n" +
   if include_source == "true" then
-    "**Raw Suite Source**\n" +
+    "#### Raw Suite Source\n" +
+    "\n" +
     "```json\n" +
     "\(.)\n" +
     "```\n" +
-    "<!-- marker:request-source -->\n"
+    "<!-- marker:request-source -->\n" +
+    "\n"
   else
     ""
   end
 ;
 
 def md_request_section_content(include_source):
+  "### \(.suitename) - \(. | count_step_states("pass"))/\(. | count_verify_steps) - ⌛\(.runtime * 1000 | round / 1000) s</h3>\n" +
+  "\n" +
   "<details>\n" +
   "<summary>\n" +
-  "<h3>\(. | get_testsuite_status_indicator) \(.suitename) - \(. | count_step_states("pass"))/\(. | count_verify_steps) - ⌛\(.runtime * 1000 | round / 1000) s</h3>\n" +
+  "\(. | get_testsuite_status_indicator) \(. | get_testsuite_status_text)\n" +
   "</summary>\n" +
   "\n<!-- marker:request -->\n" +
   ":page_facing_up: `\(.test.filename)`\n" +
@@ -117,9 +122,8 @@ def md_request_section_content(include_source):
   "⌛ \(.response.responseTime) ms\n" +
   "\n" +
   "#### Assertions\n" +
-  "\(. | md_assert_table)\n" +
-  "\n" +
-  "\(. | md_raw_source_block(include_source))\n" +
+  "\(. | md_assert_table)" +
+  "\(. | md_raw_source_block(include_source))" +
   "</details>\n"
 ;
 

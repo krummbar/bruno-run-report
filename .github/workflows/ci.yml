@@ -1,0 +1,93 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  action-full-report:
+    name: Verify Full Report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: bru-run-report
+        uses: ./
+        with:
+          include-report-sources: true
+          output-path: ./bru-run-report.json
+          run-report-path: .github/workflows/bru-output.json
+
+      - name: Assert Outputs
+        run: |
+          echo "success: ${{ steps.bru-run-report.outputs.success }}"
+          echo "md-report-path: ${{ steps.bru-run-report.outputs.md-report-path }}"
+          [ "${{ steps.bru-run-report.outputs.success }}" = "true" ]                         || (echo "::error::outputs.success doesn't match 'true'" && exit 1)
+          [ "${{ steps.bru-run-report.outputs.md-report-path }}" = "./bru-run-report.json" ] || (echo "::error::outputs.md-report-path doesn't match './bru-run-report.json'" && exit 1)
+
+      - name: Assert Content
+        env:
+          REPORT_FILE: ${{ steps.bru-run-report.outputs.md-report-path }}
+        run: |
+          grep -q '<!-- marker:summary -->' "${REPORT_FILE}"        || (echo "::error::summary is missing from report file" && exit 1)
+          grep -q '<!-- marker:request -->' "${REPORT_FILE}"        || (echo "::error::request is missing from report file" && exit 1)
+          grep -q '<!-- marker:request-source -->' "${REPORT_FILE}" || (echo "::error::request-source is missing from report file" && exit 1)
+          grep -q '<!-- marker:footer -->' "${REPORT_FILE}"         || (echo "::error::footer is missing from report file" && exit 1)
+
+  action-exclude-footer:
+    name: Verify Excluded Sections
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: bru-run-report
+        uses: ./
+        with:
+          include-footer: false
+          output-path: ./bru-run-report.json
+          run-report-path: .github/workflows/bru-output.json
+
+      - name: Assert Content
+        env:
+          REPORT_FILE: ${{ steps.bru-run-report.outputs.md-report-path }}
+        run: |
+          grep -q '<!-- marker:request-source -->' "${REPORT_FILE}" && echo "::error::request-source must not be included in report" && exit 1
+          grep -q '<!-- marker:footer -->' "${REPORT_FILE}"         && echo "::error::footer must not be included in report" && exit 1
+          exit 0
+
+  action-tmp-outfile:
+    name: Verify Output Not Present
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: bru-run-report
+        uses: ./
+        with:
+          run-report-path: .github/workflows/bru-output.json
+
+      - name: Assert Output Not Present
+        run: |
+          if [ "${{ steps.bru-run-report.outputs.md-report-path }}" == '' ]; then
+            echo "is not present"
+            exit 0
+          else
+            echo "is present"
+            exit 1
+          fi
