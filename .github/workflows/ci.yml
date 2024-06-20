@@ -26,12 +26,10 @@ jobs:
         with:
           include-report-sources: true
           output-path: ./bru-run-report.json
-          run-report-path: .github/workflows/bru-output.json
+          run-report-path: .github/bru-run-results/bru-output.json
 
       - name: Assert Outputs
         run: |
-          echo "success: ${{ steps.bru-run-report.outputs.success }}"
-          echo "md-report-path: ${{ steps.bru-run-report.outputs.md-report-path }}"
           [ "${{ steps.bru-run-report.outputs.success }}" = "true" ]                         || (echo "::error::outputs.success doesn't match 'true'" && exit 1)
           [ "${{ steps.bru-run-report.outputs.md-report-path }}" = "./bru-run-report.json" ] || (echo "::error::outputs.md-report-path doesn't match './bru-run-report.json'" && exit 1)
 
@@ -39,10 +37,34 @@ jobs:
         env:
           REPORT_FILE: ${{ steps.bru-run-report.outputs.md-report-path }}
         run: |
+          grep -q '# Bruno Run' "${REPORT_FILE}"                    || (echo "::error::default title is not correct" && exit 1)
           grep -q '<!-- marker:summary -->' "${REPORT_FILE}"        || (echo "::error::summary is missing from report file" && exit 1)
           grep -q '<!-- marker:request -->' "${REPORT_FILE}"        || (echo "::error::request is missing from report file" && exit 1)
           grep -q '<!-- marker:request-source -->' "${REPORT_FILE}" || (echo "::error::request-source is missing from report file" && exit 1)
           grep -q '<!-- marker:footer -->' "${REPORT_FILE}"         || (echo "::error::footer is missing from report file" && exit 1)
+
+  action-custom-title:
+    name: Verify Custom Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Test Local Action
+        id: bru-run-report
+        uses: ./
+        with:
+          output-path: ./bru-run-report.json
+          run-report-path: .github/bru-run-results/bru-output.json
+          report-title: '💩'
+
+      - name: Assert Content
+        env:
+          REPORT_FILE: ${{ steps.bru-run-report.outputs.md-report-path }}
+        run: |
+          grep -q '# 💩' "${REPORT_FILE}" || (echo "::error::set report title was not applied" && exit 1)
+          exit 0
 
   action-exclude-footer:
     name: Verify Excluded Sections
@@ -58,7 +80,7 @@ jobs:
         with:
           include-footer: false
           output-path: ./bru-run-report.json
-          run-report-path: .github/workflows/bru-output.json
+          run-report-path: .github/bru-run-results/bru-output.json
 
       - name: Assert Content
         env:
@@ -80,7 +102,7 @@ jobs:
         id: bru-run-report
         uses: ./
         with:
-          run-report-path: .github/workflows/bru-output.json
+          run-report-path: .github/bru-run-results/bru-output.json
 
       - name: Assert Output Not Present
         run: |

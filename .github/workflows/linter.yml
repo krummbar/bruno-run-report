@@ -33,3 +33,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: true
           FILTER_REGEX_EXCLUDE: .*src/.*.md
+          VALIDATE_NATURAL_LANGUAGE: false

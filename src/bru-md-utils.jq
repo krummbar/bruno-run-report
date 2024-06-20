@@ -1,5 +1,32 @@
 #!/usr/bin/jq -f
 
+def total_summary:
+  reduce .[].summary as $item (
+    {
+      totalRequests: 0,
+      passedRequests: 0,
+      failedRequests: 0,
+      totalAssertions: 0,
+      passedAssertions: 0,
+      failedAssertions: 0,
+      totalTests: 0,
+      passedTests: 0,
+      failedTests: 0
+    };
+    {
+      totalRequests: ([.totalRequests, $item.totalRequests] | add),
+      passedRequests: ([.passedRequests, $item.passedRequests] | add),
+      failedRequests: ([.failedRequests, $item.failedRequests] | add),
+      totalAssertions: ([.totalAssertions, $item.totalAssertions] | add),
+      passedAssertions: ([.passedAssertions, $item.passedAssertions] | add),
+      failedAssertions: ([.failedAssertions, $item.failedAssertions] | add),
+      totalTests: ([.totalTests, $item.totalTests] | add),
+      passedTests: ([.passedTests, $item.passedTests] | add),
+      failedTests: ([.failedTests, $item.failedTests] | add)
+    }
+  )
+;
+
 def is_successful(summary):
   ([summary.failedRequests, summary.failedAssertions, summary.failedTests] | add) == 0
 ;
@@ -20,13 +47,16 @@ def print_success_icon(summary):
   end
 ;
 
+def md_summary_title(title):
+  "# \( title ) \(print_success_icon(.)) `\(print_success_status(.))`"
+;
+
 def md_result_summary:
-  "\(print_success_icon(.)) `\(print_success_status(.))`\n" +
   "<!-- marker:summary -->\n" +
   "**Result:** \( print_success_status(.) )\n" +
   "\n" +
   "| Item | Total | Passed | Failed |\n" +
-  "| ---- | ----- | ------ | ------ |\n" +
+  "| ---- | :---: | :----: | :----: |\n" +
   "| Requests | \(.totalRequests) | \(.passedRequests) | \(.failedRequests) |\n" +
   "| Assertions | \(.totalAssertions) | \(.passedAssertions) | \(.failedAssertions) |\n" +
   "| Tests | \(.totalTests) | \(.passedTests) | \(.failedTests) |\n"
@@ -78,7 +108,6 @@ def md_assert_table_test_row:
 ;
 
 def md_assert_table:
-  "\n" +
   if (. | count_verify_steps > 0) then
     "| Status | Type | Expression | Error |\n" +
     "| :----: | ---- | ---------- | ----- |\n" +
@@ -90,9 +119,8 @@ def md_assert_table:
 ;
 
 def md_raw_source_block(include_source):
-  "\n" +
   if include_source == "true" then
-    "#### Raw Suite Source\n" +
+    "### Raw Suite Source\n" +
     "\n" +
     "```json\n" +
     "\(.)\n" +
@@ -105,11 +133,11 @@ def md_raw_source_block(include_source):
 ;
 
 def md_request_section_content(include_source):
-  "### \(.suitename) - \(. | count_step_states("pass"))/\(. | count_verify_steps) - ⌛\(.runtime * 1000 | round / 1000) s</h3>\n" +
+  "### \(. | get_testsuite_status_indicator) \(.suitename) - \(. | count_step_states("pass"))/\(. | count_verify_steps) - ⌛\(.runtime * 1000 | round / 1000) s</h3>\n" +
   "\n" +
   "<details>\n" +
   "<summary>\n" +
-  "\(. | get_testsuite_status_indicator) \(. | get_testsuite_status_text)\n" +
+  "\(. | get_testsuite_status_text)\n" +
   "</summary>\n" +
   "\n<!-- marker:request -->\n" +
   ":page_facing_up: `\(.test.filename)`\n" +
@@ -122,8 +150,11 @@ def md_request_section_content(include_source):
   "⌛ \(.response.responseTime) ms\n" +
   "\n" +
   "#### Assertions\n" +
+  "\n" +
   "\(. | md_assert_table)" +
+  "\n" +
   "\(. | md_raw_source_block(include_source))" +
+  "\n" +
   "</details>\n"
 ;
 

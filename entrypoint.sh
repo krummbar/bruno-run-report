@@ -1,9 +1,7 @@
 #!/bin/sh
 # consts
 PARTIAL_FOOTER=src/partial-footer.md
-PARTIAL_REQUESTS=src/partial-requests.md
-JQ_PARTIAL_HEADER=src/bru-md-head.jq
-JQ_PARTIAL_BODY=src/bru-md-body.jq
+JQ_BRU_MD_FILTER=src/bru-md.jq
 OUTFILE="$(mktemp)"
 FEAT_OUT_REPORT_PATH=false
 if [ -n "${IN_OUTPUT_PATH}" ]; then
@@ -17,6 +15,7 @@ print_input() {
   echo "::debug::IN_INCLUDE_FOOTER=${IN_INCLUDE_FOOTER}"
   echo "::debug::IN_ONLY_FAILED=${IN_ONLY_FAILED}"
   echo "::debug::IN_OUTPUT_PATH=${IN_OUTPUT_PATH}"
+  echo "::debug::IN_REPORT_TITLE=${IN_REPORT_TITLE}"
   echo "::debug::IN_RUN_REPORT_PATH=${IN_RUN_REPORT_PATH}"
   echo "::debug::FEAT_OUT_REPORT_PATH=${FEAT_OUT_REPORT_PATH}"
   echo "::debug::OUTFILE=${OUTFILE}"
@@ -39,7 +38,7 @@ exit_with() {
 #
 # $1 - Path of the jq filter file
 insert_jq() {
-  jq -r -f "$1" -L src --arg only_failed "${IN_ONLY_FAILED}" --arg include_source "${IN_INCLUDE_REPORT_SOURCES}" "${IN_RUN_REPORT_PATH}"
+  jq -r -f "$1" -L src --arg title "${IN_REPORT_TITLE}" --arg only_failed "${IN_ONLY_FAILED}" --arg include_source "${IN_INCLUDE_REPORT_SOURCES}" "${IN_RUN_REPORT_PATH}"
 }
 
 # Copies the contents of given file and pastes the contents to ${OUTFILE}.
@@ -56,22 +55,14 @@ insert_section_footer() {
   fi
 }
 
-# Adds the request section to the report file.
-insert_section_requests() {
-  insert_file "${PARTIAL_REQUESTS}"
-  insert_jq "${JQ_PARTIAL_BODY}" >>"${OUTFILE}"
-}
-
-# Adss the header section to the report file.
-insert_section_header() {
-  insert_jq "${JQ_PARTIAL_HEADER}" >>"${OUTFILE}"
+transform_json_report_to_md() {
+  insert_jq "${JQ_BRU_MD_FILTER}" >>"${OUTFILE}"
 }
 
 # Creates/clears the target report file and adds all required content to it.
 render_document() {
   : >"${OUTFILE}"
-  insert_section_header
-  insert_section_requests
+  transform_json_report_to_md
   insert_section_footer
 }
 
@@ -81,6 +72,7 @@ main() {
   render_document
 
   # TODO check how determine success here
+  cat "${OUTFILE}" >>"${GITHUB_STEP_SUMMARY}"
   echo "success=true" >>"${GITHUB_OUTPUT}"
   # If custom path for the report is provided include it as output
   if [ "${FEAT_OUT_REPORT_PATH}" = "true" ]; then

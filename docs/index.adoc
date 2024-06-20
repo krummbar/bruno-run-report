@@ -13,12 +13,24 @@ endif::[]
 :action-badge-ci: https://github.com/krummbar/bruno-run-report/actions/workflows/ci.yml/badge.svg
 :action-badge-lint: https://github.com/krummbar/bruno-run-report/actions/workflows/linter.yml/badge.svg
 :url-bruno-run-action: https://github.com/krummbar/bruno-run-action
+:url-bruno-cli: https://www.npmjs.com/package/@usebruno/cli
 
 image:{action-badge-ci}[Continuous Integration,link={url-action-ci}]
 image:{action-badge-lint}[Lint Codebase,link={url-action-lint}]
 
-A GitHub Action attaching a Markdown summary to a `bru run` execution parsed from a JSON result.
+A GitHub Action attaching a Markdown summary to a {url-bruno-cli}[`bru cli run`] execution parsed from a JSON result.
 This can be a subsequent step to {url-bruno-run-action}[bruno-run-action] to render a test run summary.
+
+[WARNING]
+====
+Supports bru run reports >= v1.20.0
+====
+
+.TODO
+[NOTE]
+====
+Add example referenc
+====
 
 toc::[]
 

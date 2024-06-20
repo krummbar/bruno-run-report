@@ -25,6 +25,10 @@ inputs:
     description: Skips successful testsuites in the report if set true.
     required: false
     default: 'false'
+  report-title:
+    description: Set a custom title for the report.
+    required: false
+    default: Bruno Run
   # end::inputs[]
 
 outputs:
@@ -44,3 +48,4 @@ runs:
     IN_INCLUDE_FOOTER: ${{ inputs.include-footer }}
     IN_INCLUDE_REPORT_SOURCES: ${{ inputs.include-report-sources }}
     IN_ONLY_FAILED: ${{ inputs.only-failed }}
+    IN_REPORT_TITLE: ${{ inputs.report-title }}

@@ -1,50 +1,284 @@
-# Bruno Run :boom: `Failure`
+# Bruno Run :100: `Success`
+
 <!-- marker:summary -->
-**Result:** Failure
+**Result:** Success
 
 | Item | Total | Passed | Failed |
-| ---- | ----- | ------ | ------ |
-| Requests | 5 | 5 | 0 |
-| Assertions | 5 | 5 | 0 |
-| Tests | 5 | 4 | 1 |
+| ---- | :---: | :----: | :----: |
+| Requests | 38 | 38 | 0 |
+| Assertions | 48 | 48 | 0 |
+| Tests | 16 | 16 | 0 |
+
+
+
+**Iterations** <!-- markdownlint-disable MD036 -->
+
+| #  | Status | Requests |
+| -- | :----: | :------: |
+| 0 | 🟢 | 19 |
+| 1 | 🟢 | 19 |
+
+# Iteration[0] :100: `Success`
+
+<!-- marker:summary -->
+**Result:** Success
+
+| Item | Total | Passed | Failed |
+| ---- | :---: | :----: | :----: |
+| Requests | 19 | 19 | 0 |
+| Assertions | 24 | 24 | 0 |
+| Tests | 8 | 8 | 0 |
+
 
 ## Requests
 
-### echo/secret/echo secret - 1/2 - ⌛1.065 s</h3>
+### 🟢 auth/basic/via auth/Basic Auth 200 - 2/2 - ⌛0.717 s</h3>
 
 <details>
 <summary>
-🔴 Fail
+Pass
 </summary>
 
 <!-- marker:request -->
-:page_facing_up: `echo/secret/echo secret.bru`
+:page_facing_up: `auth/basic/via auth/Basic Auth 200.bru`
 
-**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/json
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
 
-**Response**<br>:arrow_left: **Status:** 200 - ⌛ 992 ms
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 685 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/basic/via auth/Basic Auth 401 - 2/2 - ⌛0.2 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via auth/Basic Auth 401.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 192 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/basic/via script/Basic Auth 200 - 2/2 - ⌛0.239 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via script/Basic Auth 200.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 194 ms
 
 #### Assertions
 
 | Status | Type | Expression | Error |
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status eq 200 |  |
-| :x: | test | should return secret message | expected { null: 'null' } to deeply equal { hello: 'secret world!' } |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
 
-#### Raw Suite Source
 
-```json
-{"test":{"filename":"echo/secret/echo secret.bru"},"request":{"method":"POST","url":"https://testbench-sanity.usebruno.com/api/echo/json","headers":{"foo":"bar","content-type":"application/json"},"data":{"null":"null"}},"response":{"status":200,"statusText":"OK","headers":{"date":"Tue, 11 Jun 2024 20:20:08 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","x-powered-by":"Express","access-control-allow-origin":"*","etag":"W/\"f-vCw3smGws6jJxZ8CQVEH18soyrQ\"","x-do-app-origin":"926ac182-3c90-4dd9-ad71-717f024a0eb2","cache-control":"private","x-do-orig-status":"200","cf-cache-status":"DYNAMIC","set-cookie":"__cf_bm=6pSwNkDTAV8DKSwhWWaPx4_neGlcyHND7DdVBikB__U-1718137208-1.0.1.1-0ajPELs7jfqTM2mUvyEgeNZVNh7GCO8qozqqZbCkeY2iN6Dc8of9xfK0oLNKrji8BBM00locSZw0Qu91CtYKZw; path=/; expires=Tue, 11-Jun-24 20:50:08 GMT; domain=.testbench-sanity.usebruno.com; HttpOnly; Secure; SameSite=None","server":"cloudflare","cf-ray":"89244ccbecd59052-FRA"},"data":{"null":"null"},"responseTime":992},"error":null,"assertionResults":[{"uid":"Q85UbWUv-0NwQNTpOZ5iD","lhsExpr":"res.status","rhsExpr":"eq 200","rhsOperand":"200","operator":"eq","status":"pass"}],"testResults":[{"description":"should return secret message","status":"fail","error":"expected { null: 'null' } to deeply equal { hello: 'secret world!' }","actual":{"null":"null"},"expected":{"hello":"secret world!"},"uid":"wDWLMRTOefCeIKb83lPq5"}],"runtime":1.064990513,"suitename":"echo/secret/echo secret"}
-```
-<!-- marker:request-source -->
 
 </details>
 
-### echo/echo json - 2/2 - ⌛0.269 s</h3>
+### 🟢 auth/basic/via script/Basic Auth 401 - 2/2 - ⌛0.21 s</h3>
 
 <details>
 <summary>
-🟢 Pass
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via script/Basic Auth 401.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 197 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via auth/Bearer Auth 200 - 2/2 - ⌛0.476 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via auth/Bearer Auth 200.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 463 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via auth/Bearer Auth 401 - 2/2 - ⌛0.494 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via auth/Bearer Auth 401.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 484 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body.message Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via headers/Bearer Auth 200 - 2/2 - ⌛0.549 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via headers/Bearer Auth 200.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 537 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via headers/Bearer Auth 401 - 2/2 - ⌛0.502 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via headers/Bearer Auth 401.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 492 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body.message Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/cookie/Login - 0/0 - ⌛0.193 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/cookie/Login.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/cookie/login
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 191 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 auth/cookie/Check - 0/0 - ⌛0.477 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/cookie/Check.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/cookie/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 474 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 echo/echo json - 2/2 - ⌛0.5 s</h3>
+
+<details>
+<summary>
+Pass
 </summary>
 
 <!-- marker:request -->
@@ -52,7 +286,7 @@
 
 **Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/json
 
-**Response**<br>:arrow_left: **Status:** 200 - ⌛ 244 ms
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 474 ms
 
 #### Assertions
 
@@ -61,47 +295,14 @@
 | :white_check_mark: | assert | res.status eq 200 |  |
 | :white_check_mark: | test | should return json |  |
 
-#### Raw Suite Source
-
-```json
-{"test":{"filename":"echo/echo json.bru"},"request":{"method":"POST","url":"https://testbench-sanity.usebruno.com/api/echo/json","headers":{"foo":"bar","content-type":"application/json"},"data":{"hello":"bruno"}},"response":{"status":200,"statusText":"OK","headers":{"date":"Tue, 11 Jun 2024 20:20:08 GMT","content-type":"application/json; charset=utf-8","content-length":"17","connection":"keep-alive","x-powered-by":"Express","access-control-allow-origin":"*","etag":"W/\"11-kkVht/dYNh/LshFy6O8PEmORASI\"","x-do-app-origin":"926ac182-3c90-4dd9-ad71-717f024a0eb2","cache-control":"private","x-do-orig-status":"200","cf-cache-status":"DYNAMIC","set-cookie":"__cf_bm=E9MCF75HDX8EB.YtNKvNHVQC4ZRx2qn0OEb_PaWDc_0-1718137208-1.0.1.1-txiC5Ur2HFNP9Zo3_x6iiuv25FchHf2xYwrKl.ooU7r1.MFuPmOeHdSbaUX5a0l1tpLs4DhlVg0nnPodi_dBhg; path=/; expires=Tue, 11-Jun-24 20:50:08 GMT; domain=.testbench-sanity.usebruno.com; HttpOnly; Secure; SameSite=None","server":"cloudflare","cf-ray":"89244ccfd9e29052-FRA"},"data":{"hello":"bruno"},"responseTime":244},"error":null,"assertionResults":[{"uid":"VpsxamLUboDqwRQKVq3NU","lhsExpr":"res.status","rhsExpr":"eq 200","rhsOperand":"200","operator":"eq","status":"pass"}],"testResults":[{"description":"should return json","status":"pass","uid":"BTJguLKfhQJVEdNAZQAj3"}],"runtime":0.269488399,"suitename":"echo/echo json"}
-```
-<!-- marker:request-source -->
 
 </details>
 
-### echo/echo xml parsed - 0/0 - ⌛0.308 s</h3>
+### 🟢 echo/echo plaintext - 2/2 - ⌛0.21 s</h3>
 
 <details>
 <summary>
-🟢 Pass
-</summary>
-
-<!-- marker:request -->
-:page_facing_up: `echo/echo xml parsed.bru`
-
-**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/xml-parsed
-
-**Response**<br>:arrow_left: **Status:** 200 - ⌛ 294 ms
-
-#### Assertions
-
-> **None**
-
-#### Raw Suite Source
-
-```json
-{"test":{"filename":"echo/echo xml parsed.bru"},"request":{"method":"POST","url":"https://testbench-sanity.usebruno.com/api/echo/xml-parsed","headers":{"content-type":"text/xml"},"data":"<hello>\n  <world>bruno</world>\n</hello>"},"response":{"status":200,"statusText":"OK","headers":{"date":"Tue, 11 Jun 2024 20:20:08 GMT","content-type":"application/json; charset=utf-8","content-length":"29","connection":"keep-alive","x-powered-by":"Express","access-control-allow-origin":"*","etag":"W/\"1d-LWQaOC0jMchKPOEGQe1XlgVViJg\"","x-do-app-origin":"926ac182-3c90-4dd9-ad71-717f024a0eb2","cache-control":"private","x-do-orig-status":"200","cf-cache-status":"DYNAMIC","set-cookie":"__cf_bm=r0DLmtqjN6PVrSb7.kWtJ0iuYoYgLK9Wmbc3qBPzOjY-1718137208-1.0.1.1-0c.3E7.BpYoeIHyOw_faZnr5yayzL0dlNfLP.FJqRbeOJWGumOB1OEs_OcgkoD.jkCz79jlcJGd4x1l3qzja3w; path=/; expires=Tue, 11-Jun-24 20:50:08 GMT; domain=.testbench-sanity.usebruno.com; HttpOnly; Secure; SameSite=None","server":"cloudflare","cf-ray":"89244cd17c389052-FRA"},"data":{"hello":{"world":["bruno"]}},"responseTime":294},"error":null,"assertionResults":[],"testResults":[],"runtime":0.307986539,"suitename":"echo/echo xml parsed"}
-```
-<!-- marker:request-source -->
-
-</details>
-
-### echo/echo plaintext - 2/2 - ⌛0.227 s</h3>
-
-<details>
-<summary>
-🟢 Pass
+Pass
 </summary>
 
 <!-- marker:request -->
@@ -109,7 +310,7 @@
 
 **Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/text
 
-**Response**<br>:arrow_left: **Status:** 200 - ⌛ 213 ms
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 197 ms
 
 #### Assertions
 
@@ -118,20 +319,156 @@
 | :white_check_mark: | assert | res.status eq 200 |  |
 | :white_check_mark: | test | should return plain text |  |
 
-#### Raw Suite Source
-
-```json
-{"test":{"filename":"echo/echo plaintext.bru"},"request":{"method":"POST","url":"https://testbench-sanity.usebruno.com/api/echo/text","headers":{"content-type":"text/plain"},"data":"hello"},"response":{"status":200,"statusText":"OK","headers":{"date":"Tue, 11 Jun 2024 20:20:09 GMT","content-type":"text/plain; charset=utf-8","content-length":"5","connection":"keep-alive","x-powered-by":"Express","access-control-allow-origin":"*","etag":"W/\"5-qvTGHdzF6KLavt4PO0gs2a6pQ00\"","x-do-app-origin":"926ac182-3c90-4dd9-ad71-717f024a0eb2","cache-control":"private","x-do-orig-status":"200","cf-cache-status":"DYNAMIC","set-cookie":"__cf_bm=AGQIVlbQ1wtOYkxcJtugbpSsYgZL86_ckCKguNMekdk-1718137209-1.0.1.1-qTptM6tnNuycgBs6cVz.saiOpljkRqnt22CYIoErlKbn4X6j6csErDO56vkhbYfBjre6pllfFmahSMLjFUnRXg; path=/; expires=Tue, 11-Jun-24 20:50:09 GMT; domain=.testbench-sanity.usebruno.com; HttpOnly; Secure; SameSite=None","server":"cloudflare","cf-ray":"89244cd36ee49052-FRA"},"data":"hello","responseTime":213},"error":null,"assertionResults":[{"uid":"R188p9Nxvl0Nf-GQ9NGTJ","lhsExpr":"res.status","rhsExpr":"eq 200","rhsOperand":"200","operator":"eq","status":"pass"}],"testResults":[{"description":"should return plain text","status":"pass","uid":"QvyMhL3Og39CV92xmBE2Q"}],"runtime":0.227271002,"suitename":"echo/echo plaintext"}
-```
-<!-- marker:request-source -->
 
 </details>
 
-### ping - 2/2 - ⌛0.592 s</h3>
+### 🟢 echo/echo xml parsed - 2/2 - ⌛0.218 s</h3>
 
 <details>
 <summary>
-🟢 Pass
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo xml parsed.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/xml-parsed
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 205 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 echo/echo xml raw - 0/0 - ⌛0.2 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo xml raw.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/xml-raw
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 197 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 preview/html/bruno - 2/2 - ⌛0.169 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `preview/html/bruno.bru`
+
+**Request**<br/>:arrow_right: GET https://www.usebruno.com
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 157 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 preview/image/bruno - 1/1 - ⌛0.13 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `preview/image/bruno.bru`
+
+**Request**<br/>:arrow_right: GET https://www.usebruno.com/images/landing-2.png
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 121 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 redirects/Disable Redirect - 2/2 - ⌛0.495 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `redirects/Disable Redirect.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/redirect-to-ping
+
+**Response**<br>:arrow_left: **Status:** 302 - ⌛ 477 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 302 |  |
+| :white_check_mark: | test | should disable redirect to ping |  |
+
+
+</details>
+
+### 🟢 redirects/Test Redirect - 3/3 - ⌛0.977 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `redirects/Test Redirect.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/redirect-to-ping
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 965 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body pong |  |
+| :white_check_mark: | test | should redirect to ping |  |
+
+
+</details>
+
+### 🟢 ping - 2/2 - ⌛0.457 s</h3>
+
+<details>
+<summary>
+Pass
 </summary>
 
 <!-- marker:request -->
@@ -139,7 +476,7 @@
 
 **Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/ping
 
-**Response**<br>:arrow_left: **Status:** 200 - ⌛ 578 ms
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 438 ms
 
 #### Assertions
 
@@ -148,17 +485,485 @@
 | :white_check_mark: | assert | res.status eq 200 |  |
 | :white_check_mark: | test | should ping pong |  |
 
-#### Raw Suite Source
-
-```json
-{"test":{"filename":"ping.bru"},"request":{"method":"GET","url":"https://testbench-sanity.usebruno.com/ping","headers":{}},"response":{"status":200,"statusText":"OK","headers":{"date":"Tue, 11 Jun 2024 20:20:09 GMT","content-type":"text/html; charset=utf-8","transfer-encoding":"chunked","connection":"keep-alive","x-powered-by":"Express","access-control-allow-origin":"*","x-do-app-origin":"926ac182-3c90-4dd9-ad71-717f024a0eb2","cache-control":"private","x-do-orig-status":"200","cf-cache-status":"MISS","set-cookie":"__cf_bm=bAaC4oDzgiyOO3blEJPbbMmp_EJ30iNCqOhR1McH4CI-1718137209-1.0.1.1-k4IjSFgqYE0raacbzhOCeWUbsGEFHA4S5ffGnqu8oVFyvBe9DmEWSAS0Wx5x9Yjq7pPc9UOnYiQSHvigt96Zig; path=/; expires=Tue, 11-Jun-24 20:50:09 GMT; domain=.testbench-sanity.usebruno.com; HttpOnly; Secure; SameSite=None","vary":"Accept-Encoding","server":"cloudflare","cf-ray":"89244cd4d8df9052-FRA"},"data":"pong","responseTime":578},"error":null,"assertionResults":[{"uid":"XA7F_XpHHD-7PW76GnGrh","lhsExpr":"res.status","rhsExpr":"eq 200","rhsOperand":"200","operator":"eq","status":"pass"}],"testResults":[{"description":"should ping pong","status":"pass","uid":"nxCee_Jl2Rdey5G4-ay1Q"}],"runtime":0.591566474,"suitename":"ping"}
-```
-<!-- marker:request-source -->
 
 </details>
+
+# Iteration[1] :100: `Success`
+
+<!-- marker:summary -->
+**Result:** Success
+
+| Item | Total | Passed | Failed |
+| ---- | :---: | :----: | :----: |
+| Requests | 19 | 19 | 0 |
+| Assertions | 24 | 24 | 0 |
+| Tests | 8 | 8 | 0 |
+
+
+## Requests
+
+### 🟢 auth/basic/via auth/Basic Auth 200 - 2/2 - ⌛0.202 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via auth/Basic Auth 200.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 198 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/basic/via auth/Basic Auth 401 - 2/2 - ⌛0.202 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via auth/Basic Auth 401.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 196 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/basic/via script/Basic Auth 200 - 2/2 - ⌛0.204 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via script/Basic Auth 200.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 192 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/basic/via script/Basic Auth 401 - 2/2 - ⌛0.205 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/basic/via script/Basic Auth 401.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/basic/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 194 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via auth/Bearer Auth 200 - 2/2 - ⌛0.486 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via auth/Bearer Auth 200.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 474 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via auth/Bearer Auth 401 - 2/2 - ⌛0.212 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via auth/Bearer Auth 401.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 201 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body.message Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via headers/Bearer Auth 200 - 2/2 - ⌛0.192 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via headers/Bearer Auth 200.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 180 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body.message Authentication successful |  |
+
+
+
+</details>
+
+### 🟢 auth/bearer/via headers/Bearer Auth 401 - 2/2 - ⌛0.224 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/bearer/via headers/Bearer Auth 401.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/bearer/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 213 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 401 |  |
+| :white_check_mark: | assert | res.body.message Unauthorized |  |
+
+
+
+</details>
+
+### 🟢 auth/cookie/Login - 0/0 - ⌛0.198 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/cookie/Login.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/auth/cookie/login
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 196 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 auth/cookie/Check - 0/0 - ⌛0.461 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `auth/cookie/Check.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/api/auth/cookie/protected
+
+**Response**<br>:arrow_left: **Status:** 401 - ⌛ 459 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 echo/echo json - 2/2 - ⌛0.209 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo json.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/json
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 190 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return json |  |
+
+
+</details>
+
+### 🟢 echo/echo plaintext - 2/2 - ⌛0.216 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo plaintext.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/text
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 207 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return plain text |  |
+
+
+</details>
+
+### 🟢 echo/echo xml parsed - 2/2 - ⌛0.214 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo xml parsed.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/xml-parsed
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 204 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 echo/echo xml raw - 0/0 - ⌛0.215 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `echo/echo xml raw.bru`
+
+**Request**<br/>:arrow_right: POST https://testbench-sanity.usebruno.com/api/echo/xml-raw
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 212 ms
+
+#### Assertions
+
+> **None**
+
+
+</details>
+
+### 🟢 preview/html/bruno - 2/2 - ⌛0.099 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `preview/html/bruno.bru`
+
+**Request**<br/>:arrow_right: GET https://www.usebruno.com
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 88 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 preview/image/bruno - 1/1 - ⌛0.146 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `preview/image/bruno.bru`
+
+**Request**<br/>:arrow_right: GET https://www.usebruno.com/images/landing-2.png
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 137 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+
+| :white_check_mark: | test | should return parsed xml |  |
+
+
+</details>
+
+### 🟢 redirects/Disable Redirect - 2/2 - ⌛0.479 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `redirects/Disable Redirect.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/redirect-to-ping
+
+**Response**<br>:arrow_left: **Status:** 302 - ⌛ 460 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 302 |  |
+| :white_check_mark: | test | should disable redirect to ping |  |
+
+
+</details>
+
+### 🟢 redirects/Test Redirect - 3/3 - ⌛1.017 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `redirects/Test Redirect.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/redirect-to-ping
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 1004 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status 200 |  |
+| :white_check_mark: | assert | res.body pong |  |
+| :white_check_mark: | test | should redirect to ping |  |
+
+
+</details>
+
+### 🟢 ping - 2/2 - ⌛0.48 s</h3>
+
+<details>
+<summary>
+Pass
+</summary>
+
+<!-- marker:request -->
+:page_facing_up: `ping.bru`
+
+**Request**<br/>:arrow_right: GET https://testbench-sanity.usebruno.com/ping
+
+**Response**<br>:arrow_left: **Status:** 200 - ⌛ 462 ms
+
+#### Assertions
+
+| Status | Type | Expression | Error |
+| :----: | ---- | ---------- | ----- |
+| :white_check_mark: | assert | res.status eq 200 |  |
+| :white_check_mark: | test | should ping pong |  |
+
+
+</details>
+
 
 <!-- marker:footer -->
 ---
 
-:add_header: [bruno docs](https://docs.usebruno.com/)
+<!-- TODO add bruno download link -->
+:dog: [bruno](https://www.usebruno.com/)
+･ :hash: [bru cli](https://www.npmjs.com/package/@usebruno/cli)
+･ :blue_book: [bruno docs](https://docs.usebruno.com/)
 ･ :octocat: [bruno-run-report action](https://github.com/krummbar/bruno-run-report)
