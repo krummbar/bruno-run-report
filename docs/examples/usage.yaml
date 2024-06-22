@@ -1,4 +1,4 @@
-name: Bruno Test Collection
+name: Bruno Test & Report
 
 on:
   workflow_dispatch:
@@ -8,7 +8,20 @@ jobs:
     name: Bruno test collection
     runs-on: ubuntu-latest
     steps:
-      - name: Attach bru run summary
-        uses: krummbar/bruno-run-report@main
+      - name: Checkout  # <1>
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Bruno CLI runner  # <2>
+        id: bru-cli
+        uses: krummbar/bruno-run-action@main
         with:
-          run-report-path: bru-output.json
+          path: bruno/api-it
+          output: bru-output.json # <3>
+          outputFormat: json
+
+      - name: Attach bru run summary # <4>
+        uses: krummbar/bruno-run-report@main
+        continue-on-error: true # <5>
+        with:
+          run-report-path: bru-output.json # <6>

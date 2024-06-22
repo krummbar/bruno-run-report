@@ -1,16 +1,20 @@
 = Usage
+:url-gha-continue-on-error: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepscontinue-on-error
 
-.TODO
-[NOTE]
-====
-Document usage
-====
+The listed example clones a repository source, executes the `bru run` command,
+and finally attaches a markdown summary at the end from the previous run.
 
 .Attach run summary
 [source,yaml]
 ----
 include::examples/usage.yaml[]
 ----
+<1> Clone repository
+<2> Execute `bru run` with a collection located in folder `bruno/api-it`
+<3> Specify the report result summary in *JSON* format
+<4> Generates the Markdown summary and attaches it to `${GITHUB_SUMMARY}`
+<5> *Optional* make report step succeed even though report step potentially fails, {url-gha-continue-on-error}[see documentation]
+<6> Needs to match the path listed in callout *3*`
 
 == Inputs
 

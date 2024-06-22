@@ -77,6 +77,7 @@ main() {
   # If custom path for the report is provided include it as output
   if [ "${FEAT_OUT_REPORT_PATH}" = "true" ]; then
     echo "md-report-path=${OUTFILE}" >>"${GITHUB_OUTPUT}"
+  # TODO else delete tmp file
   fi
   # Exit action
   exit_with 0 "Successfully rendered bruno run Markdown report."
