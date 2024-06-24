@@ -1,7 +1,8 @@
 #!/bin/sh
 # consts
-PARTIAL_FOOTER=src/partial-footer.md
-JQ_BRU_MD_FILTER=src/bru-md.jq
+SOURCES="${ACTION_SOURCE_DIR:-src}"
+PARTIAL_FOOTER=${SOURCES}/partial-footer.md
+JQ_BRU_MD_FILTER=${SOURCES}/bru-md.jq
 OUTFILE="$(mktemp)"
 FEAT_OUT_REPORT_PATH=false
 if [ -n "${IN_OUTPUT_PATH}" ]; then
@@ -38,7 +39,7 @@ exit_with() {
 #
 # $1 - Path of the jq filter file
 insert_jq() {
-  jq -r -f "$1" -L src --arg title "${IN_REPORT_TITLE}" --arg only_failed "${IN_ONLY_FAILED}" --arg include_source "${IN_INCLUDE_REPORT_SOURCES}" "${IN_RUN_REPORT_PATH}"
+  jq -r -f "$1" -L "${SOURCES}" --arg title "${IN_REPORT_TITLE}" --arg only_failed "${IN_ONLY_FAILED}" --arg include_source "${IN_INCLUDE_REPORT_SOURCES}" "${IN_RUN_REPORT_PATH}"
 }
 
 # Copies the contents of given file and pastes the contents to ${OUTFILE}.
