@@ -103,16 +103,33 @@ def md_assert_table_assert_row:
   "| \(get_status_icon(.status)) | assert | \(.lhsExpr) \(.rhsExpr // "--") | \(.error // "") |"
 ;
 
+
+def md_assert_table_assert_rows:
+  if (.assertionResults | length > 0) then
+    "\([ .assertionResults[] | md_assert_table_assert_row ] | join("\n"))\n"
+  else
+    ""
+  end
+;
+
 def md_assert_table_test_row:
   "| \(get_status_icon(.status)) | test | \(.description // "--") | \(.error // "") |"
+;
+
+def md_assert_table_test_rows:
+  if (.testResults | length > 0) then
+    ([ .testResults[] | md_assert_table_test_row ] | join("\n")) + "\n"
+  else
+    ""
+  end
 ;
 
 def md_assert_table:
   if (. | count_verify_steps > 0) then
     "| Status | Type | Expression | Error |\n" +
     "| :----: | ---- | ---------- | ----- |\n" +
-    ([ .assertionResults[] | md_assert_table_assert_row ] | join("\n")) + "\n" +
-    ([ .testResults[] | md_assert_table_test_row ] | join("\n")) + "\n"
+    "\( . | md_assert_table_assert_rows )" +
+    "\( . | md_assert_table_test_rows )"
   else
     "> **None**\n"
   end

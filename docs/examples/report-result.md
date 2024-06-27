@@ -54,7 +54,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/basic/via auth/Basic Auth 401 - 2/2 - ⌛0.2 s</h3>
@@ -77,7 +76,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body Unauthorized |  |
-
 
 
 </details>
@@ -104,7 +102,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/basic/via script/Basic Auth 401 - 2/2 - ⌛0.21 s</h3>
@@ -127,7 +124,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body Unauthorized |  |
-
 
 
 </details>
@@ -154,7 +150,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/bearer/via auth/Bearer Auth 401 - 2/2 - ⌛0.494 s</h3>
@@ -177,7 +172,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body.message Unauthorized |  |
-
 
 
 </details>
@@ -204,7 +198,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/bearer/via headers/Bearer Auth 401 - 2/2 - ⌛0.502 s</h3>
@@ -227,7 +220,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body.message Unauthorized |  |
-
 
 
 </details>
@@ -409,7 +401,6 @@ Pass
 
 | Status | Type | Expression | Error |
 | :----: | ---- | ---------- | ----- |
-
 | :white_check_mark: | test | should return parsed xml |  |
 
 
@@ -524,7 +515,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/basic/via auth/Basic Auth 401 - 2/2 - ⌛0.202 s</h3>
@@ -547,7 +537,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body Unauthorized |  |
-
 
 
 </details>
@@ -574,7 +563,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/basic/via script/Basic Auth 401 - 2/2 - ⌛0.205 s</h3>
@@ -597,7 +585,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body Unauthorized |  |
-
 
 
 </details>
@@ -624,7 +611,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/bearer/via auth/Bearer Auth 401 - 2/2 - ⌛0.212 s</h3>
@@ -647,7 +633,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body.message Unauthorized |  |
-
 
 
 </details>
@@ -674,7 +659,6 @@ Pass
 | :white_check_mark: | assert | res.body.message Authentication successful |  |
 
 
-
 </details>
 
 ### 🟢 auth/bearer/via headers/Bearer Auth 401 - 2/2 - ⌛0.224 s</h3>
@@ -697,7 +681,6 @@ Pass
 | :----: | ---- | ---------- | ----- |
 | :white_check_mark: | assert | res.status 401 |  |
 | :white_check_mark: | assert | res.body.message Unauthorized |  |
-
 
 
 </details>
@@ -879,7 +862,6 @@ Pass
 
 | Status | Type | Expression | Error |
 | :----: | ---- | ---------- | ----- |
-
 | :white_check_mark: | test | should return parsed xml |  |
 
 
